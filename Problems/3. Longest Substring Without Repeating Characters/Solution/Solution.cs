@@ -5,6 +5,25 @@ public class SolutionComponent {
     {
         var chars = s.ToCharArray();
         var hs = new HashSet<char>();
+        var longestWord = 0;
+        for (int i = 0; i < chars.Length; i++)
+        {
+            var ch = chars[i];
+            if (hs.Contains(ch))
+            {
+                longestWord = Math.Max(longestWord, hs.Count);
+                hs.Clear();
+            }
+            hs.Add(ch);
+        }
+        longestWord = Math.Max(longestWord, hs.Count);
+        return longestWord;
+    }
+
+    public int LengthOfLongestSubstringOld(string s)
+    {
+        var chars = s.ToCharArray();
+        var hs = new HashSet<char>();
 
         for (int w = chars.Length; w > 0; w--)
         {

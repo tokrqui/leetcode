@@ -19,6 +19,7 @@ public class Tests
     [TestCase("pwwkew", 3)]
     [TestCase("", 0)]
     [TestCase("au", 2)]
+    [TestCase("dvdf", 3)]
     public void LengthOfLongestSubstring_Test(string input, int expected)
     {
         int result = SolutionComponentInstance.LengthOfLongestSubstring(input);
