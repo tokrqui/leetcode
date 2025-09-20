@@ -4,53 +4,37 @@ public class SolutionComponent {
     public int LengthOfLongestSubstring(string s)
     {
         var chars = s.ToCharArray();
-        var positions = new Dictionary<char, int>();
-        var longestWord = 0;
-        for (int start = 0; start < chars.Length; start++)
-        {
-            var hs = new HashSet<char>();
-            for (int i = start; i < chars.Length; i++)
-            {
-                var ch = chars[i];
-                if (hs.Contains(ch))
-                {
-                    longestWord = Math.Max(longestWord, hs.Count);
-                    hs.Clear();
-                }
-                hs.Add(ch);
-            }
-            longestWord = Math.Max(longestWord, hs.Count);
+        var currentWord = new HashSet<char>();
+        var charSet = new HashSet<char>();
 
+        foreach (var ch in chars) {
+            charSet.Add(ch);
         }
-        return longestWord;
-    }
 
-    public int LengthOfLongestSubstringOld(string s)
-    {
-        var chars = s.ToCharArray();
-        var hs = new HashSet<char>();
-
-        for (int w = chars.Length; w > 0; w--)
+        for (int w = charSet.Count; w > 0; w--)
         {
+            bool hasWord = false;
             for (int start = 0; start <= chars.Length - w; start++)
             {
-                bool hasCollision = false;
-                hs.Clear();
+                currentWord.Clear();
 
                 for (int i = start; i < start + w; i++)
                 {
-                    var currentChar = chars[i];
-                    if (hs.Contains(currentChar))
+                    var ch = chars[i];
+                    if (currentWord.Contains(ch))
                     {
-                        hasCollision = true;
-                        break;
+                        currentWord.Clear();
                     }
-                    hs.Add(currentChar);
+                    currentWord.Add(ch);
                 }
-                if (!hasCollision)
+                if (currentWord.Count == w)
                 {
-                    return hs.Count;
+                    hasWord = true;
                 }
+            }
+            if (hasWord)
+            {
+                return w;
             }
         }
 
