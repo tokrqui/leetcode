@@ -4,19 +4,24 @@ public class SolutionComponent {
     public int LengthOfLongestSubstring(string s)
     {
         var chars = s.ToCharArray();
-        var hs = new HashSet<char>();
+        var positions = new Dictionary<char, int>();
         var longestWord = 0;
-        for (int i = 0; i < chars.Length; i++)
+        for (int start = 0; start < chars.Length; start++)
         {
-            var ch = chars[i];
-            if (hs.Contains(ch))
+            var hs = new HashSet<char>();
+            for (int i = start; i < chars.Length; i++)
             {
-                longestWord = Math.Max(longestWord, hs.Count);
-                hs.Clear();
+                var ch = chars[i];
+                if (hs.Contains(ch))
+                {
+                    longestWord = Math.Max(longestWord, hs.Count);
+                    hs.Clear();
+                }
+                hs.Add(ch);
             }
-            hs.Add(ch);
+            longestWord = Math.Max(longestWord, hs.Count);
+
         }
-        longestWord = Math.Max(longestWord, hs.Count);
         return longestWord;
     }
 
